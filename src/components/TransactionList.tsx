@@ -46,7 +46,7 @@ export default function TransactionList({
               )}
             </div>
             <div className={`amount ${type}`}>
-              {type === 'income' ? '+' : '-'}{transaction.amount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Ar
+              {type === 'income' ? '+' : '-'} {transaction.amount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Ar
             </div>
           </div>
         ))}
