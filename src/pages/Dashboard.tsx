@@ -25,6 +25,35 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+
+  const handleEditTransaction = (transaction: Transaction) => {
+    setEditingTransaction(transaction);
+    setShowForm(true);
+  };
+
+  const handleUpdateTransaction = async (transactionInput: TransactionInput) => {
+    if (!editingTransaction) return;
+
+    try {
+      const updated = await TransactionService.updateTransaction(
+        token,
+        editingTransaction._id,
+        transactionInput
+      );
+
+      setTransactions(
+        transactions.map((t) => (t._id === updated._id ? updated : t))
+      );
+
+      const updatedSummary = await TransactionService.getSummary(token);
+      setSummary(updatedSummary);
+      setEditingTransaction(null);
+      setShowForm(false);
+    } catch (err) {
+      throw err;
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -63,6 +92,24 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
       setShowForm(false)
     } catch (err) {
       throw err;
+    }
+  };
+
+  const handleDeleteTransaction = async (transaction: Transaction) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete this transaction?\n${transaction.category} - ${transaction.amount} Ar`
+    );
+    if (!confirmed) return;
+
+    try {
+      await TransactionService.deleteTransaction(token, transaction._id);
+      setTransactions(transactions.filter((t) => t._id !== transaction._id));
+
+      // Update summary
+      const updatedSummary = await TransactionService.getSummary(token);
+      setSummary(updatedSummary);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to delete transaction');
     }
   };
 
@@ -128,11 +175,16 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
       </div>
 
       {showForm && (
-        <TransactionForm
-          onSubmit={handleAddTransaction}
-          onClose={() => setShowForm(false)}
-        />
-      )}
+          <TransactionForm
+            onSubmit={editingTransaction ? handleUpdateTransaction : handleAddTransaction}
+            onClose={() => {
+              setShowForm(false);
+              setEditingTransaction(null);
+            }}
+            initialData={editingTransaction ?? undefined} // optional: add to TransactionForm props
+          />
+        )}
+
     </div>
   );
 }

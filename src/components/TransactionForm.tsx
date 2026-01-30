@@ -3,25 +3,27 @@
 import React from "react"
 
 import { useState } from 'react';
-import { TransactionInput } from '../services/TransactionService';
+import { TransactionInput, Transaction } from '../services/TransactionService';
+
 import '../styles/TransactionForm.css';
 
 interface TransactionFormProps {
   onSubmit: (transaction: TransactionInput) => Promise<void>;
   onClose: () => void;
+  initialData?: Transaction;
 }
-
 const INCOME_CATEGORIES = ['Salary', 'Investment', 'Other'];
 const EXPENSE_CATEGORIES = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Other'];
 
 export default function TransactionForm({
   onSubmit,
   onClose,
+  initialData
 }: TransactionFormProps) {
-  const [type, setType] = useState<'income' | 'expense'>('expense');
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
+  const [type, setType] = useState<'income' | 'expense'>(initialData?.type || 'expense');
+  const [amount, setAmount] = useState(initialData?.amount.toString() || '');
+  const [category, setCategory] = useState(initialData?.category || '');
+  const [description, setDescription] = useState(initialData?.description || '');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
