@@ -27,28 +27,22 @@ class TransactionService {
   private apiUrl: string;
 
   constructor() {
-    // Handle both Vite (import.meta.env) and Next.js (process.env) environments
     let apiUrl = '';
-    
-    // Try Vite environment first
+
     if (typeof import.meta !== 'undefined' && import.meta.env) {
       apiUrl = (import.meta.env.VITE_API_URL as string) || '';
     }
-    
-    // Fallback to Next.js environment or process.env
+
     if (!apiUrl) {
       apiUrl = (process.env.REACT_APP_API_URL || process.env.NEXT_PUBLIC_API_URL || '');
     }
-    
-    // Final fallback to localhost
+
     this.apiUrl = apiUrl || 'http://localhost:3000';
     console.log('[TransactionService] Using API URL:', this.apiUrl);
-    
+
     this.api = axios.create({
       baseURL: this.apiUrl,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 
@@ -67,9 +61,7 @@ class TransactionService {
   async getSummary(token: string): Promise<Summary> {
     try {
       const response = await this.api.get<Summary>('/summary', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
     } catch (error) {
@@ -80,9 +72,7 @@ class TransactionService {
   async getTransactions(token: string): Promise<Transaction[]> {
     try {
       const response = await this.api.get<Transaction[]>('/transactions', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
     } catch (error) {
@@ -95,18 +85,40 @@ class TransactionService {
     transaction: TransactionInput
   ): Promise<Transaction> {
     try {
-      const response = await this.api.post<Transaction>(
-        '/transactions',
-        transaction,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await this.api.post<Transaction>('/transactions', transaction, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return response.data;
     } catch (error) {
       throw new Error('Failed to create transaction.');
+    }
+  }
+
+  // ------------------ NEW METHODS ------------------
+
+  async updateTransaction(
+    token: string,
+    id: string,
+    updatedTransaction: Partial<TransactionInput>
+  ): Promise<Transaction> {
+    try {
+      const response = await this.api.put<Transaction>(`/transactions/${id}`, updatedTransaction, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to update transaction.');
+    }
+  }
+
+  async deleteTransaction(token: string, id: string): Promise<{ ok: boolean }> {
+    try {
+      const response = await this.api.delete<{ ok: boolean }>(`/transactions/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to delete transaction.');
     }
   }
 }
