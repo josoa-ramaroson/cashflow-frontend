@@ -60,6 +60,7 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
       // Update summary
       const updatedSummary = await TransactionService.getSummary(token);
       setSummary(updatedSummary);
+      setShowForm(false)
     } catch (err) {
       throw err;
     }

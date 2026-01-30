@@ -11,7 +11,7 @@ interface TransactionFormProps {
   onClose: () => void;
 }
 
-const INCOME_CATEGORIES = ['Salary', 'Freelance', 'Investment', 'Other'];
+const INCOME_CATEGORIES = ['Salary', 'Investment', 'Other'];
 const EXPENSE_CATEGORIES = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Other'];
 
 export default function TransactionForm({
