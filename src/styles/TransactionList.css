@@ -27,6 +27,8 @@
   border-radius: 0.375rem;
   border-left: 4px solid transparent;
   transition: background-color 0.2s;
+  gap: 1rem; /* add some spacing between info, amount, actions */
+  flex-wrap: wrap; /* always allow wrapping for small screens */
 }
 
 .transaction-item:hover {
@@ -42,7 +44,8 @@
 }
 
 .transaction-info {
-  flex: 1;
+  flex: 1 1 100%; /* take full width on small screens */
+  min-width: 0; /* prevent overflow on long text */
 }
 
 .transaction-header {
@@ -74,6 +77,7 @@
   font-size: 1rem;
   white-space: nowrap;
   margin-left: 1rem;
+  flex: 0 0 auto; /* keep natural width on large screens */
 }
 
 .amount.income {
@@ -90,19 +94,60 @@
   padding: 2rem 1rem;
   font-style: italic;
 }
-
 @media (max-width: 640px) {
   .transaction-item {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start; /* left align info by default */
   }
 
   .transaction-header {
     width: 100%;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   .amount {
     margin-left: 0;
     width: 100%;
+    text-align: left; /* full width on small screens */
+    margin-top: 0.5rem;
   }
+
+  .transaction-actions {
+    width: 100%;
+    justify-content: flex-start; /* buttons left-aligned or center as you like */
+    margin-top: 0.5rem;
+  }
+}
+
+.transaction-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1 1 100%; /* take full width on small screens */
+  justify-content: flex-end; /* push buttons to right on large screens */
+  margin-top: 0.5rem; /* small spacing when wrapping */
+}
+
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.icon-button.edit {
+  color: #3b82f6; /* blue for edit */
+}
+
+.icon-button.delete {
+  color: #ef4444; /* red for delete */
 }

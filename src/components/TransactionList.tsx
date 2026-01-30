@@ -38,49 +38,49 @@ export default function TransactionList({
 
   return (
    <div className="transaction-list">
-  <h3 className="transaction-list-title">{title}</h3>
-  <div className="transactions">
-    {transactions.map((transaction) => (
-      <div key={transaction._id} className={`transaction-item ${type}`}>
-        <div className="transaction-info">
-          <div className="transaction-header">
-            <span className="category">{transaction.category}</span>
-            <span className="date">{formatDate(transaction.date)}</span>
+    <h3 className="transaction-list-title">{title}</h3>
+    <div className="transactions">
+      {transactions.map((transaction) => (
+        <div key={transaction._id} className={`transaction-item ${type}`}>
+          <div className="transaction-info">
+            <div className="transaction-header">
+              <span className="category">{transaction.category}</span>
+              <span className="date">{formatDate(transaction.date)}</span>
+            </div>
+            {transaction.description && (
+              <p className="description">{transaction.description}</p>
+            )}
           </div>
-          {transaction.description && (
-            <p className="description">{transaction.description}</p>
-          )}
-        </div>
 
-        <div className={`amount ${type}`}>
-          {type === 'income' ? '+' : '-'}{" "}
-          {transaction.amount.toLocaleString("fr-FR", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}{" "}
-          Ar
-        </div>
+          <div className={`amount ${type}`}>
+            {type === 'income' ? '+' : '-'}{" "}
+            {transaction.amount.toLocaleString("fr-FR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}{" "}
+            Ar
+          </div>
 
-        <div className="transaction-actions">
-          <button
-            onClick={() => onEdit(transaction)}
-            className="icon-button edit"
-            title="Edit transaction"
-          >
-            <Edit2 size={18} />
-          </button>
-          <button
-            onClick={() => onDelete(transaction)}
-            className="icon-button delete"
-            title="Delete transaction"
-          >
-            <Trash2 size={18} />
-          </button>
+          <div className="transaction-actions">
+            <button
+              onClick={() => onEdit(transaction)}
+              className="icon-button edit"
+              title="Edit transaction"
+            >
+              <Edit2 size={18} />
+            </button>
+            <button
+              onClick={() => onDelete(transaction)}
+              className="icon-button delete"
+              title="Delete transaction"
+            >
+              <Trash2 size={18} />
+            </button>
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
-</div>
 
   );
 }
