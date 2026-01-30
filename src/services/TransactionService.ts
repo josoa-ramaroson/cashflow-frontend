@@ -66,7 +66,7 @@ class TransactionService {
 
   async getSummary(token: string): Promise<Summary> {
     try {
-      const response = await this.api.get<Summary>('/transactions/summary', {
+      const response = await this.api.get<Summary>('/summary', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
