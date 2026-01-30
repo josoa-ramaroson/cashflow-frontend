@@ -92,3 +92,34 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+.transaction-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto; /* push buttons to the right */
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.icon-button.edit {
+  color: #3b82f6; /* blue for edit */
+}
+
+.icon-button.delete {
+  color: #ef4444; /* red for delete */
+}

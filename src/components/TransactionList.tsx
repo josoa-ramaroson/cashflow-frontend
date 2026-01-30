@@ -1,5 +1,6 @@
 import { Transaction } from '../services/TransactionService';
 import '../styles/TransactionList.css';
+import { Edit2, Trash2 } from 'lucide-react';
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -60,9 +61,22 @@ export default function TransactionList({
           </div>
 
           {/* ------------------ EDIT / DELETE ------------------ */}
+          
           <div className="transaction-actions">
-            <button onClick={() => onEdit(transaction)}>✎</button>
-            <button onClick={() => onDelete(transaction)}>🗑️</button>
+            <button
+              onClick={() => onEdit(transaction)}
+              className="icon-button edit"
+              title="Edit transaction"
+            >
+              <Edit2 size={18} />
+            </button>
+            <button
+              onClick={() => onDelete(transaction)}
+              className="icon-button delete"
+              title="Delete transaction"
+            >
+              <Trash2 size={18} />
+            </button>
           </div>
         </div>
       ))}
