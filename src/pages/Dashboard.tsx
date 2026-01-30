@@ -42,6 +42,7 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
         transactionInput
       );
 
+      console.log("updating : ", updated);
       setTransactions(
         transactions.map((t) => (t._id === updated._id ? updated : t))
       );

@@ -150,13 +150,21 @@ export default function TransactionForm({
             >
               Cancel
             </button>
+            
             <button
               type="submit"
               className="button-primary"
               disabled={loading}
             >
-              {loading ? 'Creating...' : 'Add Transaction'}
+              {loading
+                ? initialData
+                  ? 'Updating...'
+                  : 'Creating...'
+                : initialData
+                ? 'Update'
+                : 'Add Transaction'}
             </button>
+
           </div>
         </form>
       </div>
