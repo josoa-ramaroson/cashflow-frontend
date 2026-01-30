@@ -14,6 +14,8 @@ export default function TransactionList({
   transactions,
   title,
   type,
+  onEdit,
+  onDelete
 }: TransactionListProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

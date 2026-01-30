@@ -165,11 +165,15 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
             transactions={incomeTransactions}
             title="Income"
             type="income"
+            onEdit={handleEditTransaction}
+            onDelete={handleDeleteTransaction}
           />
           <TransactionList
             transactions={expenseTransactions}
             title="Expenses"
             type="expense"
+            onEdit={handleEditTransaction}
+            onDelete={handleDeleteTransaction}
           />
         </div>
       </div>
