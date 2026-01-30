@@ -1,3 +1,4 @@
+/* ------------------ Transaction List Container ------------------ */
 .transaction-list {
   background: var(--bg-primary);
   border-radius: 0.5rem;
@@ -5,30 +6,33 @@
   box-shadow: var(--shadow);
 }
 
-.transaction-list h3 {
+.transaction-list h3,
+.transaction-list-title {
   font-size: 1.125rem;
   color: var(--text-primary);
   margin-bottom: 1.25rem;
   font-weight: 600;
 }
 
+/* ------------------ Transactions Container ------------------ */
 .transactions {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
+/* ------------------ Individual Transaction Item ------------------ */
 .transaction-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* left content vs actions */
   align-items: center;
   padding: 1rem;
   background-color: var(--bg-secondary);
   border-radius: 0.375rem;
   border-left: 4px solid transparent;
   transition: background-color 0.2s;
-  gap: 1rem; /* add some spacing between info, amount, actions */
-  flex-wrap: wrap; /* always allow wrapping for small screens */
+  gap: 1rem;
+  flex-wrap: wrap; /* allow wrapping on small screens */
 }
 
 .transaction-item:hover {
@@ -43,11 +47,15 @@
   border-left-color: var(--danger-color);
 }
 
-.transaction-info {
-  flex: 1 1 100%; /* take full width on small screens */
-  min-width: 0; /* prevent overflow on long text */
+/* ------------------ Left Side: Info + Amount ------------------ */
+.transaction-left {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  min-width: 0; /* prevents text overflow */
 }
 
+/* Transaction header: category + date */
 .transaction-header {
   display: flex;
   gap: 1rem;
@@ -66,18 +74,19 @@
   font-size: 0.75rem;
 }
 
+/* Description text */
 .description {
   color: var(--text-secondary);
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
 
+/* Amount styling */
 .amount {
   font-weight: 700;
   font-size: 1rem;
+  margin-top: 0.25rem; /* spacing from description */
   white-space: nowrap;
-  margin-left: 1rem;
-  flex: 0 0 auto; /* keep natural width on large screens */
 }
 
 .amount.income {
@@ -88,46 +97,16 @@
   color: var(--danger-color);
 }
 
-.empty-message {
-  color: var(--text-secondary);
-  text-align: center;
-  padding: 2rem 1rem;
-  font-style: italic;
-}
-@media (max-width: 640px) {
-  .transaction-item {
-    flex-direction: column;
-    align-items: flex-start; /* left align info by default */
-  }
-
-  .transaction-header {
-    width: 100%;
-    margin-bottom: 0.25rem;
-  }
-
-  .amount {
-    margin-left: 0;
-    width: 100%;
-    text-align: left; /* full width on small screens */
-    margin-top: 0.5rem;
-  }
-
-  .transaction-actions {
-    width: 100%;
-    justify-content: flex-start; /* buttons left-aligned or center as you like */
-    margin-top: 0.5rem;
-  }
-}
-
+/* ------------------ Right Side: Action Buttons ------------------ */
 .transaction-actions {
   display: flex;
   gap: 0.5rem;
-  flex: 1 1 100%; /* take full width on small screens */
-  justify-content: flex-end; /* push buttons to right on large screens */
-  margin-top: 0.5rem; /* small spacing when wrapping */
+  flex-shrink: 0; /* don't shrink, always visible */
+  align-items: center; /* vertically align with left content */
+  margin-top: 0; /* no extra top margin on large screens */
 }
 
-
+/* Icon Buttons */
 .icon-button {
   background: none;
   border: none;
@@ -137,17 +116,50 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .icon-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
+  transform: scale(1.05);
 }
 
 .icon-button.edit {
-  color: #3b82f6; /* blue for edit */
+  color: #3b82f6; /* blue */
 }
 
 .icon-button.delete {
-  color: #ef4444; /* red for delete */
+  color: #ef4444; /* red */
+}
+
+/* ------------------ Empty State ------------------ */
+.empty-message {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem 1rem;
+  font-style: italic;
+}
+
+/* ------------------ Responsive: Small Screens ------------------ */
+@media (max-width: 640px) {
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .transaction-left {
+    width: 100%;
+  }
+
+  .transaction-actions {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 0.5rem; /* spacing from left content */
+  }
+
+  .amount {
+    width: 100%;
+    text-align: left;
+    margin-top: 0.5rem;
+  }
 }

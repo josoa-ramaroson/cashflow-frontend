@@ -42,23 +42,24 @@ export default function TransactionList({
     <div className="transactions">
       {transactions.map((transaction) => (
         <div key={transaction._id} className={`transaction-item ${type}`}>
-          <div className="transaction-info">
-            <div className="transaction-header">
-              <span className="category">{transaction.category}</span>
-              <span className="date">{formatDate(transaction.date)}</span>
+          <div className="transaction-left">
+            <div className="transaction-info">
+              <div className="transaction-header">
+                <span className="category">{transaction.category}</span>
+                <span className="date">{formatDate(transaction.date)}</span>
+              </div>
+              {transaction.description && (
+                <p className="description">{transaction.description}</p>
+              )}
             </div>
-            {transaction.description && (
-              <p className="description">{transaction.description}</p>
-            )}
-          </div>
-
-          <div className={`amount ${type}`}>
-            {type === 'income' ? '+' : '-'}{" "}
-            {transaction.amount.toLocaleString("fr-FR", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}{" "}
-            Ar
+            <div className={`amount ${type}`}>
+              {type === 'income' ? '+' : '-'}{" "}
+              {transaction.amount.toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
+              Ar
+            </div>
           </div>
 
           <div className="transaction-actions">
