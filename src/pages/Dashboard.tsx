@@ -90,16 +90,16 @@ export default function Dashboard({ token, onLogout }: DashboardProps) {
       <div className="summary-section">
         <div className="summary-card income">
           <div className="summary-label">Total Income</div>
-          <div className="summary-value">${summary.income.toFixed(2)}</div>
+          <div className="summary-value">{summary.income.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Ar</div>
         </div>
         <div className="summary-card expense">
           <div className="summary-label">Total Expenses</div>
-          <div className="summary-value">${summary.expense.toFixed(2)}</div>
+          <div className="summary-value">{summary.expense.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Ar}</div>
         </div>
         <div className="summary-card balance">
           <div className="summary-label">Balance</div>
           <div className={`summary-value ${summary.balance >= 0 ? 'positive' : 'negative'}`}>
-            ${summary.balance.toFixed(2)}
+            ${summary.balance.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Ar}
           </div>
         </div>
       </div>
